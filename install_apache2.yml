@@ -1,0 +1,17 @@
+---
+
+ - hosts: all
+   become: true
+   tasks:
+
+   - name: Upgrade repo index
+     apt:
+       update_cache: yes
+
+   - name: install apache2 packages
+     apt:
+       name: apache2
+
+   - name: upgrade packages to latest
+     apt:
+       upgrade: dist
