@@ -4,12 +4,18 @@
    become: true
    tasks:
 
-   - name: install apache2 packages
+   - name: install apache2 pnd php ackages
      apt:
-       name: apache2
+       name: 
+         - apache2
+         - libapache2-mod-php
+       state: latest
      when: ansible_distribution == "Ubuntu"
 
-   - name: install httpd package
+   - name: install httpd and php  package
      dnf:
-       name: httpd
+       name:
+         - httpd
+         - php
+       state: latest
      when: ansible_distribution == "CentOS"

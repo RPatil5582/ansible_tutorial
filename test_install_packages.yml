@@ -1,0 +1,12 @@
+---
+
+ - hosts: all
+   become: true
+   tasks:
+
+   - name: install apache2 pnd php ackages
+     package:
+       name: 
+         - "{{ apache_package }}"
+         - "{{ php_packages }}"
+       state: latest

@@ -1,0 +1,13 @@
+---
+
+ - hosts: all
+   become: true
+   tasks:
+
+   - name: install apache2 packages
+     yum:
+       name: apache2
+
+   - name: upgrade packages to latest
+     yum:
+       upgrade: dist
