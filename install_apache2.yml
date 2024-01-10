@@ -22,6 +22,30 @@
        state: latest
      when: ansible_distribution == "CentOS"
 
+   - name: start httpd service
+     tags: httpd,centOS
+     service:
+       name: httpd
+       state: started
+       enabled: yes
+     when: ansible_distribution == "CentOS"
+
+   - name: Change Email address
+     tags: Changed,email
+     lineinfile:
+       path: /etc/httpd/conf/httpd.conf
+       regexp: '^ServerAdmin'
+       line: ServerAdmin linux@gmail.com
+     when: ansible_distribution == "CentOS"
+     register: httpd
+
+   - name: restart httpd (CentOS)
+     tags: afterchange,restart
+     service:
+       name: httpd
+       state: restarted
+     when: httpd.changed
+
    - name: copy defaut html file
      tags: apache,httpd
      copy:
@@ -38,9 +62,9 @@
    - name: install terraform
      tags: terra,manager
      unarchive: 
-        src: https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.zip
-        dest: /usr/local/bin
-        remote_src: yes
-        mode: 0755
-        owner: root
-        group: root
+       src: https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.zip
+       dest: /usr/local/bin
+       remote_src: yes
+       mode: 0755
+       owner: root
+       group: root
