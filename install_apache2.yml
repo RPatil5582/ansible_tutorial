@@ -5,6 +5,7 @@
    tasks:
 
    - name: install apache2 pnd php ackages
+     tags: always
      apt:
        name: 
          - apache2
@@ -13,6 +14,7 @@
      when: ansible_distribution == "Ubuntu"
 
    - name: install httpd and php  package
+     tags: once,CentOS,app
      dnf:
        name:
          - httpd
