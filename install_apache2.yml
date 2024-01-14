@@ -4,6 +4,20 @@
    become: true
    tasks:
 
+   - name: update repo(Centos)
+     tags: always
+     dnf:
+       update_cache: yes
+     changed_when: false
+     when: ansible_distribution == "CentOS"
+
+   - name: update repo(Ubuntu)
+     tags: always
+     apt:
+       update_cache: yes
+     changed_when: false
+     when: ansible_distribution == "Ubuntu"
+
    - name: install apache2 pnd php ackages
      tags: always
      apt:
@@ -68,3 +82,14 @@
        mode: 0755
        owner: root
        group: root
+
+ - hosts: all
+   become: true
+   tasks:
+
+    - name: add ssh key for simone
+      tags: always
+      authorized_key:
+        user: simone
+        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOwK3qD3ngvWyHdp3hNTdP1k3MRrS92kAlVPGwb3QTq3 Ansible default"
+
