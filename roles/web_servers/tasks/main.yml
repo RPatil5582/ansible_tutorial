@@ -1,0 +1,9 @@
+- name: install apache2 pnd php ackages
+  tags: always
+  apt:
+    name:
+     - apache2
+     - libapache2-mod-php
+    state: latest
+  when: ansible_distribution == "Ubuntu"
+

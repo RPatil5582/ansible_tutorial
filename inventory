@@ -1,2 +1,5 @@
+[web_servers]
 192.168.1.206 apache_package=apache2 php_packages=libapache-mod-php
+
+[workstation]
 192.168.1.205 apache_package=httpd php_packages=php
