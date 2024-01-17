@@ -1,35 +1,26 @@
 - name: install httpd and php  package
   tags: once,CentOS,app
-  dnf:
+  package:
     name:
-     - httpd
-     - php
+     - "{{ apache_package_name }}"
+     - "{{ php_package }}"
     state: latest
-  when: ansible_distribution == "CentOS"
 
 - name: start httpd service
   tags: httpd,centOS
   service:
-    name: httpd
+    name: "{{ apache_service }}"
     state: started
     enabled: yes
-  when: ansible_distribution == "CentOS"
 
 - name: Change Email address
   tags: Changed,email
   lineinfile:
     path: /etc/httpd/conf/httpd.conf
     regexp: '^ServerAdmin'
-    line: ServerAdmin linux@gmail.com
+    line: ServerAdmin @gmail.com
   when: ansible_distribution == "CentOS"
-  register: httpd
-
-- name: restart httpd (CentOS)
-  tags: afterchange,restart
-  service:
-    name: httpd
-    state: restarted
-  when: httpd.changed
+  notify: restart_apache
 
 - name: copy defaut html file
   tags: apache,httpd
@@ -53,4 +44,3 @@
     mode: 0755
     owner: root
     group: root
-
